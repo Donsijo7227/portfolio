@@ -1,77 +1,45 @@
 
-//dynamic single page logic 
-(function() {
-  let Start = () => {
-    console.log('App Started');
-
-    // Display Header with Navbar and Footer
-    LoadHeader();
-    LoadFooter();
-  };
-
-  window.addEventListener('load', Start);
-})();
-
-let LoadHeader = () => {
-  $.get('./views/shared/header.html', (htmlData) => {
-    console.log("Header loaded successfully");
-    $('header').html(htmlData);
-
-    // Bind click events to navbar links
-    $('.navbar-brand, .nav-link').on('click', (event) => {
-      event.preventDefault();
-
-      // Set page title based on clicked link's ID
-      document.title = $(event.currentTarget).prop('id');
-
-      // Load the corresponding page content
-      LoadContent();
-    });
-  });
-}
-
-let LoadContent = () => {
-  let currentPage = document.title;
-
-  $.get(`./views/${currentPage}.html`, (htmlData) => {
-    $('main').html(htmlData);
-  });
-}
-
-let LoadFooter = () => {
-  $.get('./views/shared/footer.html', (htmlData) => {
-    $('footer').html(htmlData);
-  });
-};
-
-//homePageOrbit 
-const icons = document.querySelectorAll('.icon');
-        const orbits = [
-            { radius: 200, speed: 0.0003 },
-            { radius: 150, speed: 0.0005 },
-            { radius: 100, speed: 0.0006 }
-        ];
-        const centerX = 200;
-        const centerY = 200;
-
-        icons.forEach((icon, index) => {
-            icon.orbit = orbits[index % 3];
-            icon.angle = (index / icons.length) * Math.PI * 2; // Distribute icons evenly
-        });
-
-        function animateOrbit() {
-            icons.forEach((icon) => {
-                icon.angle += icon.orbit.speed;
-                const x = centerX + icon.orbit.radius * Math.cos(icon.angle);
-                const y = centerY + icon.orbit.radius * Math.sin(icon.angle);
-                icon.style.left = `${x - 25}px`;
-                icon.style.top = `${y - 25}px`;
-            });
-            requestAnimationFrame(animateOrbit);
-        }
-
-        animateOrbit();
-//Matrix
+    <div class="container">
+      <ul class="stack-cards js-stack-cards">
+        <li >
+          <div class="firstCarsContainer rz4-text-component rz4-padding-md">
+            <div class="firstCardLeft">
+              <div class="imgContainer">
+                <div class="profileimg">
+                  <img src="img/donsijopic.jpg">
+                </div>
+              </div>
+              <div class="profileInfo">
+                <h4>Don Sijo</h4>
+                <h6>Web Developer</h6>
+                <p>Barrie, Ontario, Canada</p>
+              </div>
+              <div class="socialIcons">
+                <a href="https://github.com/Donsijo7227" target="_blank"><i class="bi bi-github"></i></a>
+                <a href="https://www.linkedin.com/in/dsijo2003/" target="_blank"><i class="bi bi-linkedin"></i></a>
+              </div>
+              <div class="edu-exp">
+                <div class="education">
+                  <h6>Education</h6>
+                  <p>Georgian College - Barrie 2023-Present <br>Interactive Media Design - Web</p>
+                </div>
+              </div>
+              <!-- <iframe src="https://lottie.host/embed/ebac20a4-9833-42aa-a4f3-273284279dc3/SNLwsmA99o.json"></iframe> -->
+            </div>
+            <div class="secondCardRIght">
+              <div class="secondacardinfocontainer">
+                <div class="intro">
+                  <p><span class="abtMefirstPart">Hi, I'm <span class="mYname text-3 matrix-animation">Don</span> <br/> <span class="job text-1 matrix-animation"> A Web Developer</span> <br/>  creating fast, responsive, and user-friendly digital experiences. Currently sharpening my <span class="abtmesecpart text-2 matrix-animation">Full-Stack</span> skills at <span class="clg text-3 matrix-animation">Georgian College</span>, <br/>I’m passionate about tech and always exploring new ways to innovate.</p></span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+ <script>
+  //Matrix
 var matrixAnimations = document.querySelectorAll(".matrix-animation");
 var animationIds = [];
 var originalTexts = [];
@@ -170,3 +138,5 @@ function shuffleArray(array) {
     array[j] = temp;
   }
 }
+
+ </script>
