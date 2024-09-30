@@ -568,13 +568,111 @@ ol, ul, menu {
   font-weight: 700;
 }
 
-/*sidebar*/
+/*Projects*/
+#projectContainer{
+  display: flex;
+  flex-direction: column;
+  margin: auto 60px;
+  width: 80%;
+}
 
+#projectContainer img{
+  width: 100%;
+}
 
+.card {
+  background-color: hsl(0, 0%, 100%);
+  box-shadow: 0 0 0 1px hsla(230, 13%, 9%, 0.05),
+              0 0.3px 0.4px hsla(230, 13%, 9%, 0.02),
+              0 0.9px 1.5px hsla(230, 13%, 9%, 0.045),
+              0 3.5px 6px hsla(230, 13%, 9%, 0.09);
+  border-radius: 0.375em;
+  overflow: hidden;
+}
 
+.card__img-wrapper img {
+  display: block;
+  width: 100%;
+}
 
+.card__content {
+  padding: 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
 
+.card__description {
+  font-size: 0.9375rem;
+  color: hsl(225, 4%, 47%);
+}
 
+.card__btn {
+  width: 100%;
+  font-size: 0.9375rem;
+}
+
+/* --link variation */
+.card--link {
+  text-decoration: none;
+  display: block;
+  color: inherit;
+  transition: box-shadow 0.2s;
+}
+
+.card--link:hover {
+  box-shadow: 0 0 0 1px hsla(230, 13%, 9%, 0.05),
+              0 0.9px 1.25px hsla(230, 13%, 9%, 0.025),
+              0 3px 5px hsla(230, 13%, 9%, 0.05),
+              0 12px 20px hsla(230, 13%, 9%, 0.09);
+}
+
+.card--link .card__img-wrapper {
+  position: relative;
+}
+
+.card--link .card__img-wrapper::after { /* overlay layer */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: hsla(230, 13%, 9%, 0.6);
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.card__link-icon-wrapper {
+  position: absolute;
+  z-index: 1;
+  width: 64px;
+  height: 64px;
+  top: calc(50% - 32px);
+  left: calc(50% - 32px);
+  background-color: hsla(0, 0%, 100%, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: 0.2s;
+}
+
+.card__link-icon-wrapper .cd-icon {
+  --size: 32px;
+  display: block;
+  color: hsl(230, 13%, 9%);
+}
+
+.card--link:hover .card__img-wrapper::after {
+  opacity: 1;
+}
+
+.card--link:hover .card__link-icon-wrapper {
+  opacity: 1;
+  transform: scale(1);
+}
 
 
 

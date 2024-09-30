@@ -1,5 +1,3 @@
-
-//dynamic single page logic 
 (function() {
   let Start = () => {
     console.log('App Started');
@@ -13,36 +11,71 @@
 })();
 
 let LoadHeader = () => {
-  $.get('views/shared/header.html', (htmlData) => {
-    console.log("Header loaded successfully");
-    $('header').html(htmlData);
+  fetch('views/shared/header.html')
+    .then(response => response.text())
+    .then(htmlData => {
+      console.log("Header loaded successfully");
+      document.querySelector('header').innerHTML = htmlData;
 
-    // Bind click events to navbar links
-    $('.navbar-brand, .nav-link').on('click', (event) => {
-      event.preventDefault();
+      // Bind click events to navbar links
+      document.querySelectorAll('.navbar-brand, .nav-link').forEach(link => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
 
-      // Set page title based on clicked link's ID
-      document.title = $(event.currentTarget).prop('id');
+          // Set page title based on clicked link's ID
+          document.title = event.currentTarget.id;
+          console.log(document.title)
 
-      // Load the corresponding page content
-      LoadContent();
+          // Load the corresponding page content
+          LoadContent();
+        });
+      });
+    })
+    .catch(error => {
+      console.error('Error loading header:', error);
     });
-  });
 }
 
 let LoadContent = () => {
   let currentPage = document.title;
+  let pageContent = '';
 
-  $.get(`/views/${currentPage}.html`, (htmlData) => {
-    $('main').html(htmlData);
-  });
+  // Using if-else statements to load content based on the page title
+  if (currentPage === 'home') {
+    pageContent = 'views/home.html';
+  } else if (currentPage === 'aboutme') {
+    pageContent = 'views/aboutme.html';
+  } else if (currentPage === 'contact') {
+    pageContent = 'views/contact.html';
+  } else if (currentPage === 'projects') {
+    pageContent = 'views/projects.html';
+    LoadProjects();
+  }  
+  else {
+    pageContent = 'views/404.html'; // Fallback page if no match is found
+  }
+
+  fetch(pageContent)
+    .then(response => response.text())
+    .then(htmlData => {
+      document.querySelector('main').innerHTML = htmlData;
+    })
+    .catch(error => {
+      console.error('Error loading content:', error);
+    });
 }
 
 let LoadFooter = () => {
-  $.get('views/shared/footer.html', (htmlData) => {
-    $('footer').html(htmlData);
-  });
+  fetch('views/shared/footer.html')
+    .then(response => response.text())
+    .then(htmlData => {
+      document.querySelector('footer').innerHTML = htmlData;
+    })
+    .catch(error => {
+      console.error('Error loading footer:', error);
+    });
 };
+
 
 //homePageOrbit 
 const icons = document.querySelectorAll('.icon');
@@ -71,102 +104,42 @@ const icons = document.querySelectorAll('.icon');
         }
 
         animateOrbit();
-//Matrix
-var matrixAnimations = document.querySelectorAll(".matrix-animation");
-var animationIds = [];
-var originalTexts = [];
-var currentIndex = 0;
-var isAnimating = false;
 
-for (var i = 0; i < matrixAnimations.length; i++) {
-  originalTexts[i] = matrixAnimations[i].innerText;
 
-  matrixAnimations[i].addEventListener(
-    "mouseover",
-    (function (i) {
-      return function () {
-        if (isAnimating) return;
+let LoadProjects = () => {
+  console.log("loadprojectfunctioncalled")
+  fetch('data/projects.json') 
+    .then(response => response.json())
+    .then(projects => {
+      let projectsContainer = document.querySelector('#projectContainer'); // Container for projects
+      projectsContainer.innerHTML = ''; 
 
-        isAnimating = true;
-        currentIndex = 0;
-        animateText(matrixAnimations[i], originalTexts[i]);
-      };
-    })(i)
-  );
+      projects.forEach(project => {
+        // Create a card for each project
+        let projectCard = `
+          <div class="card">
+            <figure class="card__img-wrapper">
+              <img src="${project.image}" alt="${project.title}">
+            </figure>
 
-  matrixAnimations[i].addEventListener(
-    "mouseout",
-    (function (i) {
-      return function () {
-        cancelAnimationFrame(animationIds[i]);
-        resetAnimation(matrixAnimations[i], originalTexts[i]);
-        currentIndex = 0;
-        isAnimating = false;
-      };
-    })(i)
-  );
-}
+            <div class="card__content">
+              <h4>${project.title}</h4>
 
-function animateText(element, originalText) {
-  var characters = originalText.split("");
-  var randomizedIndices = getRandomIndices(characters.length);
+              <p class="card__description">${project.description}</p>
+              
+              <footer>
+                <a href="${project.link}" class="card__btn cd-btn cd-btn--primary" target="_blank">Visit</a>
+              </footer>
+            </div>
+          </div>
+        `;
 
-  var startTime = null;
-  var duration = 800; // Adjust the duration as desired
+        // Append the card to the projects container
+        projectsContainer.innerHTML += projectCard;
+      });
+    })
+    .catch(error => {
+      console.error('Error loading projects:', error);
+    });
+};
 
-  function animate(timestamp) {
-    if (!startTime) startTime = timestamp;
-    var progress = timestamp - startTime;
-
-    if (progress >= duration) {
-      isAnimating = false;
-      return;
-    }
-
-    var currentIndex = Math.floor((progress / duration) * characters.length);
-
-    scrambleText(element, characters, randomizedIndices, currentIndex);
-    animationIds[i] = requestAnimationFrame(animate);
-  }
-
-  animationIds[i] = requestAnimationFrame(animate);
-}
-
-function scrambleText(element, characters, randomizedIndices, currentIndex) {
-  var scrambledText = "";
-
-  for (var i = 0; i < characters.length; i++) {
-    if (i <= currentIndex || characters[i] === " ") {
-      scrambledText += characters[i];
-    } else {
-      var randomIndex = randomizedIndices[i];
-      scrambledText += String.fromCharCode(Math.floor(Math.random() * 94) + 33);
-    }
-  }
-
-  element.innerText = scrambledText;
-}
-
-function resetAnimation(element, originalText) {
-  element.innerText = originalText;
-}
-
-function getRandomIndices(length) {
-  var indices = [];
-
-  for (var i = 0; i < length; i++) {
-    indices.push(i);
-  }
-
-  shuffleArray(indices);
-  return indices;
-}
-
-function shuffleArray(array) {
-  for (var i = array.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  }
-}

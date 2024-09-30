@@ -1,0 +1,21 @@
+[
+    {
+      "title": "Website for an Educational Institution",
+      "description": "A responsive website for an educational institute built using HTML, CSS, and JavaScript. The site features a clean design with intuitive navigation, showcasing courses, faculty, events, and admission details. It provides a seamless user experience across devices, emphasizing accessibility and modern web practices.",
+      "link": "https://edusuccess.netlify.app/",
+      "image": "img/projects/img1.png"
+    },
+    {
+      "title": "E-com CLothing store",
+      "description": "Developed a custom eCommerce clothing store on WordPress, featuring a custom-built theme from scratch using PHP and Advanced Custom Fields (ACF). Integrated payment gateways and utilized WordPress hooks for dynamic functionality, providing a smooth shopping experience and an easy-to-manage backend for store owners.",
+      "link": "https://drive.google.com/file/d/1V2zUNtB89YTYuyuJOYcoepqkfYq_8knW/view?usp=sharing",
+      "image": "img/projects/img2.png"
+    },
+    {
+      "title": "Project 3",
+      "description": "This is the description for Project 3.",
+      "link": "https://example.com/project3",
+      "image": "img/projects/img2.png"
+    }
+  ]
+  
