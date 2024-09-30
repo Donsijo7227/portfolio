@@ -13,7 +13,7 @@
 })();
 
 let LoadHeader = () => {
-  $.get('./views/shared/header.html', (htmlData) => {
+  $.get('views/shared/header.html', (htmlData) => {
     console.log("Header loaded successfully");
     $('header').html(htmlData);
 
@@ -33,13 +33,13 @@ let LoadHeader = () => {
 let LoadContent = () => {
   let currentPage = document.title;
 
-  $.get(`./views/${currentPage}.html`, (htmlData) => {
+  $.get(`/views/${currentPage}.html`, (htmlData) => {
     $('main').html(htmlData);
   });
 }
 
 let LoadFooter = () => {
-  $.get('./views/shared/footer.html', (htmlData) => {
+  $.get('views/shared/footer.html', (htmlData) => {
     $('footer').html(htmlData);
   });
 };
