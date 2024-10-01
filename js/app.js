@@ -11,7 +11,7 @@
 })();
 
 let LoadHeader = () => {
-  fetch('views/shared/header.html')
+  fetch('./views/shared/header.html')
     .then(response => response.text())
     .then(htmlData => {
       console.log("Header loaded successfully");
@@ -66,7 +66,7 @@ let LoadContent = () => {
 }
 
 let LoadFooter = () => {
-  fetch('views/shared/footer.html')
+  fetch('./views/shared/footer.html')
     .then(response => response.text())
     .then(htmlData => {
       document.querySelector('footer').innerHTML = htmlData;
