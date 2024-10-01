@@ -658,13 +658,13 @@ border-radius: 20px;
 }
 
 .skill-logo {
-    width: 100%; /* Responsive to the parent container */
-    height: auto; /* Maintain aspect ratio */
-    transition: transform 0.2s; /* Animation on hover */
+    width: 100%;
+    height: auto; 
+    transition: transform 0.2s; 
 }
 
 .skill-logo:hover {
-    transform: scale(1.1); /* Slightly scale up on hover */
+    transform: scale(1.1); 
 }
 
 
