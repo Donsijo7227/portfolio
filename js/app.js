@@ -1,6 +1,9 @@
 (function() {
   let Start = () => {
     console.log('App Started');
+    console.log("app.js is loaded");
+
+    
 
     // Display Header with Navbar and Footer
     LoadHeader();
@@ -41,15 +44,22 @@ let LoadContent = () => {
   let pageContent = '';
 
   // Using if-else statements to load content based on the page title
-  if (currentPage === 'home') {
-    pageContent = 'views/home.html';
+  if (currentPage === 'home' || currentPage === 'Home') {
+    console.log("home or home");
+
+    pageContent = 'index.html';
   } else if (currentPage === 'aboutme') {
     pageContent = 'views/aboutme.html';
   } else if (currentPage === 'contact') {
     pageContent = 'views/contact.html';
   } else if (currentPage === 'projects') {
     pageContent = 'views/projects.html';
-    LoadProjects();
+  } 
+  else if (currentPage === 'getintouch') {
+    pageContent = 'views/getintouch.html';
+  } 
+  else if (currentPage === 'skills') {
+    pageContent = 'views/skills.html';
   }  
   else {
     pageContent = 'views/404.html'; // Fallback page if no match is found
@@ -59,6 +69,9 @@ let LoadContent = () => {
     .then(response => response.text())
     .then(htmlData => {
       document.querySelector('main').innerHTML = htmlData;
+      if (currentPage === 'projects') {
+        LoadProjects();
+      }
     })
     .catch(error => {
       console.error('Error loading content:', error);
@@ -77,41 +90,14 @@ let LoadFooter = () => {
 };
 
 
-//homePageOrbit 
-const icons = document.querySelectorAll('.icon');
-        const orbits = [
-            { radius: 200, speed: 0.0003 },
-            { radius: 150, speed: 0.0005 },
-            { radius: 100, speed: 0.0006 }
-        ];
-        const centerX = 200;
-        const centerY = 200;
 
-        icons.forEach((icon, index) => {
-            icon.orbit = orbits[index % 3];
-            icon.angle = (index / icons.length) * Math.PI * 2; // Distribute icons evenly
-        });
-
-        function animateOrbit() {
-            icons.forEach((icon) => {
-                icon.angle += icon.orbit.speed;
-                const x = centerX + icon.orbit.radius * Math.cos(icon.angle);
-                const y = centerY + icon.orbit.radius * Math.sin(icon.angle);
-                icon.style.left = `${x - 25}px`;
-                icon.style.top = `${y - 25}px`;
-            });
-            requestAnimationFrame(animateOrbit);
-        }
-
-        animateOrbit();
-
-
+//project page 
 let LoadProjects = () => {
   console.log("loadprojectfunctioncalled")
   fetch('data/projects.json') 
     .then(response => response.json())
     .then(projects => {
-      let projectsContainer = document.querySelector('#projectContainer'); // Container for projects
+      let projectsContainer = document.querySelector('#projectContainer'); 
       projectsContainer.innerHTML = ''; 
 
       projects.forEach(project => {
@@ -142,4 +128,24 @@ let LoadProjects = () => {
       console.error('Error loading projects:', error);
     });
 };
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent the default form submission
 
+  // Get the form data
+  const serviceID = 'service_0aju5j8'; // Replace with your service ID
+  const templateID = 'template_6uo8b7p'; // Replace with your template ID
+
+  // Send the email
+  emailjs.sendForm(serviceID, templateID, this)
+      .then(() => {
+          document.getElementById('response-message').innerText = 'Message sent successfully!';
+          document.getElementById('contact-form').reset(); // Reset the form
+      }, (err) => {
+          document.getElementById('response-message').innerText = 'Failed to send the message. Please try again.';
+          console.error(err);
+      });
+});
+
+(function(){
+  emailjs.init("Lq5hvNAE4ULjK3CmV");
+})();
